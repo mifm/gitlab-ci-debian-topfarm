@@ -2,7 +2,7 @@
 
 FROM buildpack-deps:jessie
 
-MAINTAINER Frederik Zahle <frza@dtu.dk>
+MAINTAINER David Verelst <dave@dtu.dk>
 
 ENV SHELL /bin/bash
 ENV LD_LIBRARY_PATH $LD_LIBRARY_PATH:/usr/local/lib
@@ -30,11 +30,10 @@ RUN wget --quiet \
     rm Miniconda-latest-Linux-x86_64.sh && \
     chmod -R a+rx $CONDA_ENV_PATH
 RUN conda update --quiet --yes conda \
-  && conda create -y -n py35 python=3.5 \
-  && conda create -y -n py27 python=2.7 \
-  && /bin/bash -c "source activate py27 \
-  && conda install pip numpy scipy nose hdf5" \
-  && /bin/bash -c "source activate py35 \
-  && conda install pip numpy scipy nose hdf5"
+  && conda create -y -n py36 python=3.6 \
+  && /bin/bash -c "source activate py36 \
+  && conda install pip numpy scipy nose hdf5 pandas jupyter plotly \
+  && conda install -c conda-forge utm --no-deps \
+  && pip install sphinx-fortran --no-deps"
 
 RUN echo 'ulimit -s unlimited' >> .bashrc
