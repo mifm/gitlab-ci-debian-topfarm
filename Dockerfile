@@ -32,7 +32,7 @@ RUN wget --quiet \
 RUN conda update --quiet --yes conda \
   && conda create -y -n py36 python=3.6 \
   && /bin/bash -c "source activate py36 \
-  && conda install pip numpy scipy nose hdf5 pandas pytest-cov sphinx \
+  && conda install pip numpy scipy nose hdf5 pandas pytest-cov sphinx xarray \
   && conda install -c conda-forge utm --no-deps \
   && pip install sphinx-fortran --no-deps"
 
