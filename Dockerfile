@@ -8,6 +8,7 @@ ENV SHELL /bin/bash
 ENV LD_LIBRARY_PATH $LD_LIBRARY_PATH:/usr/local/lib
 ENV CONDA_ENV_PATH /opt/miniconda
 ENV PATH $CONDA_ENV_PATH/bin:$PATH
+ENV REQUIREMENTS requirements.txt
 
 RUN apt-get update \
  && apt-get install --fix-missing -y -q \
@@ -34,6 +35,8 @@ RUN conda update --quiet --yes conda \
   && /bin/bash -c "source activate py36 \
   && conda install pip numpy scipy nose hdf5 pandas pytest-cov sphinx xarray \
   && conda install -c conda-forge utm --no-deps \
+  && pip install --upgrade pip \
+  && pip install -r /$REQUIREMENTS \
   && pip install sphinx-fortran --no-deps"
 
 RUN echo 'ulimit -s unlimited' >> .bashrc
